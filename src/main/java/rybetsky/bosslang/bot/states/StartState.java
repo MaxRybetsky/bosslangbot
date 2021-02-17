@@ -8,6 +8,7 @@ public class StartState extends BaseState {
 
     public StartState() {
         super(StatesIdentifiers.START);
+        setNextSate(new DictionaryState());
     }
 
     @Override
@@ -16,7 +17,7 @@ public class StartState extends BaseState {
                 context.getUpdate().getMessage().getChatId().toString(),
                 "Hello, " + context.getUser().getFirstName()
         );
-        setNextSate(new DictionaryState());
+        context.getUser().setState(getNextSate().getStateId());
         return message;
     }
 }

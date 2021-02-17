@@ -21,7 +21,6 @@ public class StartCommand extends AbstractHandler {
         if (user.getState() == StatesIdentifiers.START) {
             BaseState state = new StartState();
             message = state.action(context);
-            user.setState(state.getNextSate().getStateId());
         } else {
             message = new SendMessage(
                     user.getChatId().toString(),

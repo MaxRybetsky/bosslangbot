@@ -29,6 +29,9 @@ public class SettingsCommand extends AbstractHandler {
         Language[] languages = Language.values();
         int i = 1;
         for (Language language : languages) {
+            if(language == Language.Default) {
+                continue;
+            }
             if (i % 6 == 0) {
                 builder.addButtonsToRow();
             }

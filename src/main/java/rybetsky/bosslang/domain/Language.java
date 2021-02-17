@@ -4,12 +4,15 @@ import lombok.Getter;
 
 @Getter
 public enum Language {
-    English("en-US"),
-    Russian("ru-RU");
+    Default("", ""),
+    English("en-US", "en"),
+    Russian("ru-RU", "ru");
 
-    private String tag;
+    private final String tag;
+    private final String code;
 
-    private Language(String tag) {
+    private Language(String tag, String code) {
         this.tag = tag;
+        this.code = code;
     }
 }
