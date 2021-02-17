@@ -8,7 +8,7 @@ import rybetsky.bosslang.bot.states.StatesIdentifiers;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "usr")
+@Table(schema = "public", name = "usr")
 @Getter
 @Setter
 @NoArgsConstructor
