@@ -7,6 +7,7 @@ import rybetsky.bosslang.bot.Context;
 import rybetsky.bosslang.bot.handlers.AbstractHandler;
 import rybetsky.bosslang.bot.handlers.utils.InlineKeyboardBuilder;
 import rybetsky.bosslang.domain.Language;
+import rybetsky.bosslang.domain.UserEntity;
 
 public class SettingsCommand extends AbstractHandler {
 
@@ -16,27 +17,38 @@ public class SettingsCommand extends AbstractHandler {
 
     @Override
     public BotApiMethod<?> action(Context context) {
+        UserEntity user = context.getUser();
+        Language language = user.getLanguage();
         SendMessage message = new SendMessage(
-                context.getUser().getChatId().toString(),
-                "Choose your language:"
+                user.getChatId().toString(),
+                getMessageService().getMessage(
+                        "lang.setting-message",
+                        language.getTag()
+                )
         );
-        message.setReplyMarkup(createInlineKeyboard());
+        message.setReplyMarkup(createInlineKeyboard(language));
         return message;
     }
 
-    public InlineKeyboardMarkup createInlineKeyboard() {
+    public InlineKeyboardMarkup createInlineKeyboard(Language lang) {
         InlineKeyboardBuilder builder = new InlineKeyboardBuilder();
         Language[] languages = Language.values();
         int i = 1;
         for (Language language : languages) {
-            if(language == Language.Default) {
+            if (language == Language.Default) {
                 continue;
             }
             if (i % 6 == 0) {
                 builder.addButtonsToRow();
             }
-            String lang = language.toString();
-            builder.addButton(lang, "lang|" + lang);
+            String langStr = language.toString();
+            String text = lang == Language.English ?
+                    langStr :
+                    getMessageService().getMessage(
+                            langStr,
+                            lang.getTag()
+                    );
+            builder.addButton(text, "lang|" + langStr);
             i++;
         }
         builder.addButtonsToRow();

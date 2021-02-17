@@ -3,6 +3,7 @@ package rybetsky.bosslang.bot.states;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import rybetsky.bosslang.bot.Context;
+import rybetsky.bosslang.domain.UserEntity;
 
 public class StartState extends BaseState {
 
@@ -13,9 +14,15 @@ public class StartState extends BaseState {
 
     @Override
     public BotApiMethod<?> action(Context context) {
+        UserEntity user = context.getUser();
+        String greetings = getMessageService().getMessage(
+                "welcome.greetings",
+                user.getLanguage().getTag(),
+                user.getFirstName()
+        );
         SendMessage message = new SendMessage(
                 context.getUpdate().getMessage().getChatId().toString(),
-                "Hello, " + context.getUser().getFirstName()
+                greetings
         );
         context.getUser().setState(getNextSate().getStateId());
         return message;

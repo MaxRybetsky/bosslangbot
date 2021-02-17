@@ -3,6 +3,7 @@ package rybetsky.bosslang.service.translator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import rybetsky.bosslang.domain.Language;
 
@@ -21,7 +22,7 @@ public class GoogleTranslatorService implements Translator {
     }
 
     @Override
-    public String translate(Language source, Language target, String text) {
+    public String translate(Language source, Language target, String text) throws Exception {
         StringBuilder url = new StringBuilder();
         url.append(link)
                 .append("?q=")
@@ -30,14 +31,11 @@ public class GoogleTranslatorService implements Translator {
                 .append(source.getCode())
                 .append("&target=")
                 .append(target.getCode());
-        System.out.println(url);
-        String result;
         try{
-            result = restTemplate.getForObject(url.toString(), String.class);
+            return restTemplate.getForObject(url.toString(), String.class);
         }
         catch (Exception e) {
-            result = "Sorry, we have some error :(\n Please, try again...";
+            throw new Exception();
         }
-        return result;
     }
 }

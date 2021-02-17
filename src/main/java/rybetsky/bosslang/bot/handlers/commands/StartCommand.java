@@ -24,7 +24,10 @@ public class StartCommand extends AbstractHandler {
         } else {
             message = new SendMessage(
                     user.getChatId().toString(),
-                    "You're already started! :)"
+                    getMessageService().getMessage(
+                            "welcome.already-started",
+                            user.getLanguage().getTag()
+                    )
             );
         }
         return message;

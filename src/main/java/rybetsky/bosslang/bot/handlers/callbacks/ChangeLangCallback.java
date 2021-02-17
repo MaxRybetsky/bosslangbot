@@ -26,9 +26,17 @@ public class ChangeLangCallback extends AbstractHandler {
                 language = Language.English;
             }
             userEntity.setLanguage(language);
-            message = answerCallbackQuery("Edited", false, callbackQuery);
+            String answer = getMessageService().getMessage(
+                    "lang.edited",
+                    context.getUser().getLanguage().getTag()
+            );
+            message = answerCallbackQuery(answer, false, callbackQuery);
         } else {
-            message = answerCallbackQuery("Wrong Language!", true, callbackQuery);
+            String error = getMessageService().getMessage(
+                    "lang.error",
+                    context.getUser().getLanguage().getTag()
+            );
+            message = answerCallbackQuery(error, true, callbackQuery);
         }
         return message;
     }
