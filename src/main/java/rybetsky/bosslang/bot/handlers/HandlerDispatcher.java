@@ -2,6 +2,8 @@ package rybetsky.bosslang.bot.handlers;
 
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import rybetsky.bosslang.bot.Context;
+import rybetsky.bosslang.bot.handlers.callbacks.ChangeLangCallback;
 import rybetsky.bosslang.bot.handlers.commands.SettingsCommand;
 import rybetsky.bosslang.bot.handlers.commands.StartCommand;
 
@@ -19,7 +21,8 @@ public class HandlerDispatcher {
     private void init() {
         AbstractHandler startCommand = new StartCommand();
         AbstractHandler settingsCommand = new SettingsCommand();
-        addCommands(startCommand, settingsCommand);
+        AbstractHandler langCallback = new ChangeLangCallback();
+        addCommands(startCommand, settingsCommand, langCallback);
     }
 
     private void addCommands(AbstractHandler... handlers) {
@@ -31,23 +34,24 @@ public class HandlerDispatcher {
                         ));
     }
 
-    public BotApiMethod<?> handUpdateIfQueryOrCommand(Update update) {
+    public BotApiMethod<?> handUpdateIfQueryOrCommand(Context context) {
         String key;
+        Update update = context.getUpdate();
         if(update.hasCallbackQuery()) {
-            key = update.getCallbackQuery().getData();
+            key = update.getCallbackQuery().getData().split("\\|")[0];
         } else if(update.hasMessage() && update.getMessage().hasText()) {
             key = update.getMessage().getText();
         } else {
             return null;
         }
-        return handIfExists(key, update);
+        return handIfExists(key, context);
     }
 
-    private BotApiMethod<?> handIfExists(String key, Update update) {
-        AbstractHandler command = dispatcher.get(key);
+    private BotApiMethod<?> handIfExists(String key, Context context) {
+        QueryHandler command = dispatcher.get(key);
         if (command == null) {
             return null;
         }
-        return command.action(update);
+        return command.action(context);
     }
 }

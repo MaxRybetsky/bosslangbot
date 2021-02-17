@@ -28,7 +28,7 @@ public class UserEntity {
     @Column(columnDefinition = "int")
     private Language language;
 
-    public UserEntity(Long chatIdd, String firstName,
+    public UserEntity(Long chatId, String firstName,
                       String lastName, String username,
                       StatesIdentifiers state, Language language) {
         this.chatId = chatId;
@@ -37,5 +37,17 @@ public class UserEntity {
         this.username = username;
         this.state = state;
         this.language = language;
+    }
+
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "chatId=" + chatId +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", username='" + username + '\'' +
+                ", state=" + state +
+                ", language=" + language +
+                '}';
     }
 }

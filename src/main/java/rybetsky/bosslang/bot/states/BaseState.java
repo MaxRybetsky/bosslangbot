@@ -3,18 +3,18 @@ package rybetsky.bosslang.bot.states;
 import lombok.Getter;
 import lombok.Setter;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
-import org.telegram.telegrambots.meta.api.objects.Update;
+import rybetsky.bosslang.bot.Context;
 
 @Getter
 @Setter
 public abstract class BaseState {
-    private final StatesIdentifiers state;
+    private final StatesIdentifiers stateId;
 
     private BaseState nextSate;
 
-    public BaseState(StatesIdentifiers state) {
-        this.state = state;
+    public BaseState(StatesIdentifiers stateId) {
+        this.stateId = stateId;
     }
 
-    public abstract BotApiMethod<?> action(Update update);
+    public abstract BotApiMethod<?> action(Context context);
 }

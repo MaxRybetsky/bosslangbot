@@ -1,8 +1,8 @@
 package rybetsky.bosslang.bot.handlers;
 
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
-import org.telegram.telegrambots.meta.api.objects.Update;
+import rybetsky.bosslang.bot.Context;
 
 public interface QueryHandler {
-    BotApiMethod<?> action(Update update);
+    BotApiMethod<?> action(Context context);
 }
