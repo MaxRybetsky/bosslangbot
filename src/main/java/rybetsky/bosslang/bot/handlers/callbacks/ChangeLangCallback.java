@@ -3,12 +3,11 @@ package rybetsky.bosslang.bot.handlers.callbacks;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import rybetsky.bosslang.bot.Context;
-import rybetsky.bosslang.bot.handlers.AbstractHandler;
 import rybetsky.bosslang.bot.handlers.utils.LanguagesDispatcher;
 import rybetsky.bosslang.domain.Language;
 import rybetsky.bosslang.domain.UserEntity;
 
-public class ChangeLangCallback extends AbstractHandler {
+public class ChangeLangCallback extends AbstractCallback {
 
     public ChangeLangCallback() {
         super("lang");

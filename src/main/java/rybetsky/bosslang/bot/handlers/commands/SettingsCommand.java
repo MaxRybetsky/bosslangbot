@@ -4,12 +4,11 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import rybetsky.bosslang.bot.Context;
-import rybetsky.bosslang.bot.handlers.AbstractHandler;
 import rybetsky.bosslang.bot.handlers.utils.InlineKeyboardBuilder;
 import rybetsky.bosslang.domain.Language;
 import rybetsky.bosslang.domain.UserEntity;
 
-public class SettingsCommand extends AbstractHandler {
+public class SettingsCommand extends AbstractCommand {
 
     public SettingsCommand() {
         super("/settings");

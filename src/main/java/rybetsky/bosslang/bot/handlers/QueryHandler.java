@@ -5,4 +5,6 @@ import rybetsky.bosslang.bot.Context;
 
 public interface QueryHandler {
     BotApiMethod<?> action(Context context);
+
+    String getHandlerName();
 }

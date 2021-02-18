@@ -12,24 +12,24 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class HandlerDispatcher {
-    private Map<String, AbstractHandler> dispatcher;
+    private Map<String, QueryHandler> dispatcher;
 
     public HandlerDispatcher() {
         init();
     }
 
     private void init() {
-        AbstractHandler startCommand = new StartCommand();
-        AbstractHandler settingsCommand = new SettingsCommand();
-        AbstractHandler langCallback = new ChangeLangCallback();
+        QueryHandler startCommand = new StartCommand();
+        QueryHandler settingsCommand = new SettingsCommand();
+        QueryHandler langCallback = new ChangeLangCallback();
         addCommands(startCommand, settingsCommand, langCallback);
     }
 
-    private void addCommands(AbstractHandler... handlers) {
+    private void addCommands(QueryHandler... handlers) {
         dispatcher = Arrays.stream(handlers)
                 .collect(
                         Collectors.toMap(
-                                AbstractHandler::getHandlerName,
+                                QueryHandler::getHandlerName,
                                 handler -> handler
                         ));
     }
