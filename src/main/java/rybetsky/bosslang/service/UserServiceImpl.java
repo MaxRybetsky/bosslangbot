@@ -2,6 +2,7 @@ package rybetsky.bosslang.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
 import rybetsky.bosslang.bot.states.StatesIdentifiers;
@@ -27,12 +28,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity findByUpdateOrCreateNew(Update update) {
-        Long chatId;
-        if (update.hasCallbackQuery()) {
-            chatId = update.getCallbackQuery().getMessage().getChatId();
-        } else {
-            chatId = update.getMessage().getChatId();
-        }
+        Message message = getMessageByUpdate(update);
+        Long chatId = message.getChatId();
         Optional<UserEntity> userEntityOptional = userDao.findById(chatId);
         return userEntityOptional.orElseGet(() -> newUserByUpdate(update));
     }
@@ -48,8 +45,9 @@ public class UserServiceImpl implements UserService {
     }
 
     private UserEntity newUserByUpdate(Update update) {
-        Long chatId = update.getMessage().getChatId();
-        User user = update.getMessage().getFrom();
+        Message message = getMessageByUpdate(update);
+        Long chatId = message.getChatId();
+        User user = message.getFrom();
         UserEntity newUser = new UserEntity(
                 chatId,
                 user.getFirstName(),
@@ -60,5 +58,11 @@ public class UserServiceImpl implements UserService {
         );
         userDao.save(newUser);
         return newUser;
+    }
+
+    private Message getMessageByUpdate(Update update) {
+        return update.hasCallbackQuery() ?
+                update.getCallbackQuery().getMessage() :
+                update.getMessage();
     }
 }
