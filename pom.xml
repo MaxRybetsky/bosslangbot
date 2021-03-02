@@ -55,6 +55,12 @@
             <artifactId>spring-web</artifactId>
             <version>5.3.3</version>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13</version>
+            <scope>test</scope>
+        </dependency>
 
         <!-- Spring Devtools -->
         <dependency>
@@ -63,11 +69,11 @@
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
+
+        <!-- FlyWay -->
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13</version>
-            <scope>test</scope>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
         </dependency>
     </dependencies>
 
