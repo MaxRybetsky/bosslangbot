@@ -9,6 +9,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.telegram.telegrambots.meta.api.objects.*;
 import rybetsky.bosslang.bot.states.StatesIdentifiers;
@@ -19,6 +20,7 @@ import rybetsky.bosslang.domain.UserEntity;
 import java.util.Optional;
 
 @SpringBootTest
+@TestPropertySource("classpath:application-test.properties")
 @RunWith(SpringRunner.class)
 public class UserServiceTest {
     @Autowired
